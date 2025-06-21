@@ -33,6 +33,19 @@ If you're implementing a subsystem in {cpp} and you override BeginPlay or EndPla
 be sure to call the super functions, or the subsystem will not be handled correctly!
 ====
 
+=== Hybrid Subsystems
+
+Subsystems can be a convenient place to implement hybrid Blueprint and {cpp} functionality
+since they can be easily retrieved from anywhere with world context.
+To do this, define your subsystem in {cpp} with `UCLASS(Abstract, Blueprintable)`
+then create a Blueprint child class in the editor.
+Only the blueprint child class should be listed in the `Mod Subsystems` array of a Game World Module.
+
+The following UFUNCTION specifiers are useful for hybrid subsystems:
+
+- Implementing functions in {cpp} that can be called from Blueprints: `BlueprintCallable`, `BlueprintNativeEvent`
+- Implementing functions in Blueprints that can be called from {cpp}: `BlueprintImplementableEvent`, `BlueprintNativeEvent`
+
 == Replication Policy
 
 A subsystem's replication policy determines which side(s) the subsystem will exist on in multiplayer
@@ -42,7 +55,7 @@ Subsystems have the `SpawnOnServer` replication policy by default,
 meaninging clients do not have an instance of the subsystem.
 If this is not the desired behavior,
 review the table below to find the replication policy that best suits your needs,
-then change it in the Class Defaults (blueprint) or constructor (C++).
+then change it in the Class Defaults (Blueprint) or constructor ({cpp}).
 
 .Replication Policy Quick Reference: Sidedness
 |===
@@ -99,15 +112,39 @@ make sure that you have correctly configured its Replication Policy.
 
 == Referencing a Subsystem
 
-A subsystem itself is an actor inheriting from `ModSubsystem`.
-You can also use subsystems to store data to save states.
-
 Subsystems are held by the `SubsystemActorManager` that can be obtained using the `GetSubsystemActorManager` function.
 Use the `GetSubsystemActor` function on the manager to get a reference to a subsystem.
+
+Consider checking if the retrieved subsystem is valid before trying to do anything with it using an IsValid node.
+
+=== From Blueprints
 
 image:Satisfactory/Subsystems/Subsystems_sam.PNG[GameWorldModule]
 
 * The first parameter of the function is a reference to a `SubsystemActorManager` acquired using the `GetSubsystemActorManager` function.
 * The second parameter is the class of the subsystem actor to retrieve.
 
-Consider checking if the retrieved subsystem is valid before trying to do anything with it.
+=== From {cpp}
+
+The SubsystemActorManager is a UWorldSubsystem and as such can be accessed from the world context via Unreal's getter.
+GetSubsystemActor can be used with a generic type parameter to retrieve the subsystem actor of the specified class.
+
+```cpp
+// Requires something with world context, for example, an actor
+UWorld* WorldObject = GEngine->GetWorldFromContextObjectChecked(WorldContext);
+USubsystemActorManager* SubsystemActorManager = WorldObject->GetSubsystem<USubsystemActorManager>();
+check(SubsystemActorManager);
+
+AYourSubsystem* subsystem = SubsystemActorManager->GetSubsystemActor<AYourSubsystem>()
+```
+
+Make sure to only use subsystems from the game thread.
+
+== Wait for Subsystem
+
+Although subsystems spawn relatively early in the game world loading sequence,
+sometimes code that wants to use them may end up triggering sooner.
+This can happen in multiplayer when a subsystem has not replicated to the client yet,
+or on hosts when an xref:Development/ModLoader/ActorMixins.adoc[Actor Mixin] is triggering code on Begin Play.
+
+In these situations, you can use the `Wait for Subsystem` node in Blueprint event graphs to wait until the subsystem is available.
