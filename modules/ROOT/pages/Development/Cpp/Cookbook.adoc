@@ -93,3 +93,21 @@ const FBuildableBeamLightweightData* beamData = RuntimeData->TypeSpecificData.Ge
 float length = beamData->BeamLength;
 return length;
 ```
+
+== Latent Functions
+
+https://mikelis.net/easy-c-latent-functions-in-unreal-engine-blueprints/
+
+
+== Creating K2 Nodes
+
+https://www.gamedev.net/tutorials/programming/engines-and-middleware/improving-ue4-blueprint-usability-with-custom-nodes-r5694/
+
+https://forums.unrealengine.com/t/how-do-i-create-my-own-blueprint-node-with-c/294883/2
+
+https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Editor/Kismet
+
+https://dev.epicgames.com/community/learning/tutorials/2lZj/unreal-engine-creating-a-uk2node-returning-a-reference
+
+https://forums.unrealengine.com/t/how-to-create-k2node-that-appears-as-multiple-node-entries-per-every-component-property-within-blueprint/770002
+

@@ -346,19 +346,53 @@ link:#_project_compilation[compile the editor from Visual Studio]
 to find out why it's erroring and return here when finished with that step.
 Consider seeking help on the Discord if you are stuck here.
 
-Once you load into the Editor,
-you might see a popup that says 'New plugins are available.'
-You can safely dismiss this popup.
+[id="FirstTimeUserPopups"]
+=== First Time User Pop-Ups
+
+Opening the editor for the first time may present you with a few pop-up messages to address.
+
+==== "GeneratedSoundBanks folder does not seem to be set"
+
+If you see a message: "GeneratedSoundBanks folder does not seem to be set. Would you like to open the settings window to set it?",
+you need to change a couple Wwise settings.
+
+Click `Yes` on the popup to open the settings window.
+Or, if you've already closed the popup,
+// Make sure the below content stays in sync with Audio.adoc#_Unreal_Project_Configuration
+open the Unreal Engine project settings (`Edit` > `Project Settings...`)
+and navigate to the "Wwise" category's page `Integration Settings`.
+
+In the "Installation" subsection,
+change the `Root Output Path` setting to `<WwiseProjectPath>/GeneratedSoundBanks`.
+Note that it may be pre-filled with an incorrect Wwise project path,
+so use the directory picker to ensure you've selected your actual Wwise project.
+
+Next, head to the "Initialization" subsection
+and change the `Unreal Audio Routing` setting to `Both Wwise and Unreal audio`.
+
+// End stays in sync
+
+This pop-up should no longer appear next time you open the editor.
+
+==== "New Plugins Are Available"
+
+If you see a pop-up that says 'New plugins are available.',
+you can safely dismiss this popup, as the plugins required for modding are already installed and enabled.
+
+==== Level Viewport Errors
+
+You may see error messages in the editor's Level `Viewport 1` tab such as
+"LANDSCAPE: 64 ACTORS WITH PHYSICAL MATERIALS NEED TO BE REBUILT".
+
+It is usually safe to ignore errors in the Level Viewport tab
+because errors displayed there are unrelated to typical mod content.
 
 == Familiarize Yourself with the Editor
 
 Now is a good time to familiarize yourself with
 the Unreal Engine editor through various other tutorials.
-We suggest you take the 'Welcome to the Unreal Editor'
-guided tutorial that the editor should be telling you about
-if you haven't taken or dismissed it yet.
 
-We also suggest the following resources:
+We suggest the following resources:
 
 - https://docs.unrealengine.com/5.3/en-US/unreal-editor-interface/[Unreal Editor Interface] -
 Provides a high-level overview of what each of the editor panels do.
@@ -366,15 +400,6 @@ Provides a high-level overview of what each of the editor panels do.
 How to access the Content Browser, including adding multiple Content Browser panels to your viewport.
 - https://docs.unrealengine.com/5.3/en-US/content-browser-interface-in-unreal-engine/[Content Browser Interface] -
 How to use the various features offered by the Content Browser.
-
-[NOTE]
-====
-You may see error messages in the editor's Level `Viewport 1` tab such as
-"LANDSCAPE: 64 ACTORS WITH PHYSICAL MATERIALS NEED TO BE REBUILT".
-
-It is usually safe to ignore errors in the Level Viewport tab
-because errors displayed there are unrelated to typical mod content.
-====
 
 == (Optional) Modify Editor Color Scheme
 
