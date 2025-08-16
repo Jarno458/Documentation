@@ -157,6 +157,7 @@ Accessor=(Class="AFGBuildableFactory", Property="mInventoryPotential")
 BlueprintReadWrite=(Class="/Script/FactoryGame.FGSchematicManager", Property="mPurchasedSchematics")
 BlueprintCallable=(Class="/Script/FactoryGame.FGDismantleInterface", Function="Dismantle")
 EditAnywhere=(Class="/Script/FactoryGame.IconData", Property="ID")
+; Note that even though WorldScannableData is a struct, BlueprintReadWrite still uses Class to select it
 BlueprintType=(Struct="/Script/FactoryGame.WorldScannableData")
 BlueprintReadWrite=(Class="/Script/FactoryGame.WorldScannableData", Property="Actor")
 ----
