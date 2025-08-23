@@ -190,6 +190,15 @@ Open up the `FactoryGame.sln` file in your project folder.
 
 [TIP]
 ====
+Visual Studio may tell you "These projects are either not supported or need project behavior impacting modifications <...>"
+in a pop-up window upon opening the solution.
+It is safe to click "OK" on this message and dismiss it.
+Even though some of the components are outdated or out of support,
+they are the ones required by Satisfactory and Unreal and must be used.
+====
+
+[TIP]
+====
 Visual Studio may tell you "Based on your solution, you might need to install extra components for a full development experience" at the top of the Solution Explorer window.
 It is safe to ignore this message.
 Alternatively, you can install the requested components to keep Visual Studio from complaining about this
