@@ -128,7 +128,8 @@ Next, from that directory, edit the following Powershell command to point to you
 The above command assumes you are using an Epic Games copy `FactoryGameEGS`.
 If you are using a Steam copy of the game:
 
-1. Use the xref:Development/TestingResources.adoc#LaunchScript[Launch Script] at least once before running the command to create the files required for the Steam game to launch correctly from the command line.
+1. Use the xref:Development/TestingResources.adoc#LaunchScript[Launch Script] at least once before running the command
+   to create the files required for the Steam game to launch correctly from the command line.
 2. Adjust the command to use `FactoryGameSteam` instead of `FactoryGameEGS`.
 ====
 
@@ -145,11 +146,13 @@ which will provide info regarding the dumping process (since `-log -NewConsole` 
 You can safely close the Powershell window once you see the console log window,
 although you may wish to keep it open to restart it if it crashes.
 
-Normally the dumper would be run with the `-nullrhi` flag to avoid wasting processing power on rendering the game's menu
-but this argument seems to be broken as of Satisfactory 1.0,
-so it has been excluded from the command.
-The game window will appear and will be exceedingly low FPS and behind in playing sound effects.
-Keep it minimized as the asset dumper operates and focus on the console window.
+The game user interface will never open since we used the `-nullrhi -norhithread` arguments,
+leaving only the console window visible.
+// Normally the dumper would be run with the `-nullrhi` flag to avoid wasting processing power on rendering the game's menu
+// but this argument seems to be broken as of Satisfactory 1.0,
+// so it has been excluded from the command.
+// The game window will appear and will be exceedingly low FPS and behind in playing sound effects.
+// Keep it minimized as the asset dumper operates and focus on the console window.
 
 // The game window itself will never open since the `-nullrhi` argument was used.
 After the game's loading process, you should see a sequence of `LogAssetDumper` messages.
