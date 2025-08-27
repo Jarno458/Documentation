@@ -52,6 +52,8 @@ void AFGBuildableManufacturer::BeginPlay()
 +
     * If you skip this step, your inventory will ALWAYS be replicated if the owner building is replicated.
       However, if you follow it, the inventory will ONLY be replicated to the client if it has the buildable UI open.
+    * The UObject passed to `SetReplicationRelevancyOwner` is expected to implement IFGConditionalReplicationInterface.
+      Buildings implement this for you.
 +
 4. Now just use the same inventory on both server and client.
    No need for any kind of hacks with inventory object swapping or waiting for inventories.
