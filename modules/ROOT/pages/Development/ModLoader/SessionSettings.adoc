@@ -8,12 +8,14 @@ This page is a work in progress.
 Introduced in SML3.5, Session Settings
 (referred to in-game as Mod Savegame Settings)
 are a feature similar to Advanced Game Settings
-that allows mods to store configuration information on a per-game-save basis.
-They do not require Advanced Game Settings to be enabled to be used.
+that allows mods to store configuration information on a _per-game-save_ basis.
+Session Setting values are xref:Development/Satisfactory/Multiplayer.adoc[automatically replicated in multiplayer]
+and can be edited by any connected player.
+Note that Session Settings do not require Advanced Game Settings to be enabled to be used.
 
 Session Settings are currently stored in the Map Travel URL,
 making them available exceedingly early in the loading process.
-This may change in the future.
+This may change in the future depending on what mod developers decide is more useful.
 
 It's possible to make a session setting specific to only a certain level,
 making them particularly useful for providing config options for custom levels
@@ -147,6 +149,12 @@ Mod Config is better for user interface or visual stuff since it is saved with t
 Session Settings are good for things you want to be a choice per save file, such as options for a custom level.
 
 Session Setting values are xref:Development/Satisfactory/Multiplayer.adoc[replicated in multiplayer].
+
+Session settings are always per-game-save, while mod config is per game install.
+For example, in a dedicated server, the server has its own mod config and each client has their own mod config.
+Making the server aware of client's chosen configs (or vice versa) is only required if
+some behavior on both sides requires it, for example movement speeds or content registration.
+Replicating config values must be implemented by the mod developer.
 
 == Advanced Game Settings
 
