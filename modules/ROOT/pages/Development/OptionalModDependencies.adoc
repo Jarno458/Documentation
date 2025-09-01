@@ -1,0 +1,91 @@
+= Optional Mod Dependencies
+
+[NOTE]
+====
+You have found a hidden docs page!
+
+This page is still a work in progress.
+
+If you have any feedback, please let us know in the Discord.
+====
+
+To make optional instead of required, in uplugin, set the mod's "Plugins" entry field "Optional" to `true`.
+
+TODO link to uplugin page.
+
+The "SemVersion" field means "if the mod is installed, the installed version must match this semver range".
+
+[id="SafeReference"]
+== Safely Referencing Content
+
+Only hard reference content you know will be loaded,
+can cause crashes otherwise.
+Soft class paths can be useful.
+Easiest to bring the mod into your project via xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[Importing Other Mods to your Project].
+If not public or infeasible, make a dummy plugin with stubs.
+Asset toolkit can do this for mods too but is not documented.
+
+Test extensively with and without the mod installed.
+
+[id="blueprint"]
+== Optional Mod Dependencies in Blueprint
+
+TODO anything special to mention here?
+
+[id="cpp"]
+== Optional Mod Dependencies in {cpp}
+
+Required to depend on another mod's {cpp} content.
+
+Your normal code can't directly reference types from the optional mod,
+you must fence that into a separate {cpp} module.
+
+Add a new {cpp} module to your mod by following the steps TODO xref:Development/Cpp/setup.adoc[Setup] manual?
+
+Add the module name to the `PrivateDependencyModuleNames` array in your main module's Build.cs file.
+
+In your uplugin, list your new {cpp} module
+and set its "LoadingPhase" to `None` to prevent it from automatically loading
+(which would fail when the mod is not present).
+Then add the mod to the "Plugins" array.
+Example:
+
+// cspell:ignore BlueBeka
+```json
+"Modules": [
+  {
+    "Name": "BlueBekaTweaks",
+    "Type": "Runtime",
+    "LoadingPhase": "Default"
+  },
+  {
+    "Name": "BlueBekaTweaksFicsitFarming",
+    "Type": "Runtime",
+    "LoadingPhase": "None" // <- Don't load automatically
+  }
+],
+"Plugins": [
+  {
+    "Name": "SML",
+    "Enabled": true,
+    "SemVersion": "^3.11.1"
+  },
+  {
+    "Name": "FicsitFarming",
+    "Enabled": true,
+    "SemVersion": "^4.2.34",
+    "Optional": true // <- Mark Optional
+  }
+]
+```
+
+TODO generalize this info for the docs. Possibly cpp example mod content? See BlueBeka use case on modding discord https://discord.com/channels/555424930502541343/1410620050989256714/1411668949497548850
+
+Add an FModuleManager::OnModulesChanged delegate to the Unreal Module Manager singeleton,
+and when the mod you care about is loaded (check the Name argument),
+load your {cpp} module via FModuleManager::LoadModule (passing the FName of your {cpp} module as defined in your uplugin).
+
+TODO does this have to be done in a TFuture? BlueBeka's use case did
+
+To spawn child xref:Development/ModLoader/ModModules.adoc[Mod Modules] based on the presence of another mod,
+use SpawnChildModule as described on their page.
