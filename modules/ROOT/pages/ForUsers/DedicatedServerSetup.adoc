@@ -58,6 +58,7 @@ The below list is shuffled each time the page is loaded to avoid bias towards an
 <script>
 const unshuffled = [
   "Indifferent Broccoli",
+  "Shockbyte",
   "Bisect Hosting",
   "Zap Hosting",
   "Supercraft",
@@ -86,7 +87,6 @@ regardless of what their websites and marketing pages claim:
 
 // cspell:ignore nitroserv gportal
 - nitroserv.games - Allows creating but not deleting dot files, which bricks the server
-- Shockbyte - Doesn't show the root executable
 - 4netplayers - Doesn't show the root executable, as well as other game files
 - dawnserver.de - Provider does not allow mods
 ====
