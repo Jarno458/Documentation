@@ -112,14 +112,23 @@ which is available at both world creation and in the pause menu.
 
 == Reading and Writing Session Settings
 
-You can read the value of a session setting via the "Get <something> Option Value" method of the Session Settings Manager.
+Check ExampleMod for some example session settings and how to read their values.
+There is an example in the ExampleMod Level Blueprint and in the Game World Module.
+
+=== From Blueprints
+
+To get a reference to the Session Settings Manager,
+use the "Get Session Settings Manager" node.
+
+You can read the value of a session setting via the "Get <typename> Option Value" method of the Session Settings Manager.
 You can also subscribe to changes via "Subscribe to Dynamic Option Update".
 
 If you want to programatically modify the value of a session setting,
-use the "Set <something> Option Value" method of the Session Settings Manager.
+use the "Set <typename> Option Value".
 
-Check ExampleMod for some example session settings and how to read their values.
-There is an example in the ExampleMod Level Blueprint and in the Game World Module.
+=== From {cpp}
+
+The SessionSettingsManager is a UWorldSubsystem and as such can be accessed from the world context via Unreal's getter.
 
 An example of reading a integer Session Setting value from {cpp}:
 
@@ -128,11 +137,6 @@ An example of reading a integer Session Setting value from {cpp}:
 USessionSettingsManager* SessionSettings = self->GetWorld()->GetSubsystem<USessionSettingsManager>();
 auto optionValue = SessionSettings->GetIntOptionValue("YourModReference.IntSessionSetting");
 ```
-
-// TODO verify
-// Session settings are stored in the session settings subsystem https://discord.com/channels/555424930502541343/562722670974599227/1126996669481889903
-
-// Session Settings can optionally be marked as TODO, meaning that they will be stored (uncompressed) in the Unreal session URL as part of the save header. This means their values will be loaded as soon as the game mode is initialized and before world actors are initialized.
 
 === Unreal Console Commands
 
@@ -155,6 +159,11 @@ For example, in a dedicated server, the server has its own mod config and each c
 Making the server aware of client's chosen configs (or vice versa) is only required if
 some behavior on both sides requires it, for example movement speeds or content registration.
 Replicating config values must be implemented by the mod developer.
+
+// TODO verify
+// Session settings are stored in the session settings subsystem https://discord.com/channels/555424930502541343/562722670974599227/1126996669481889903
+
+// Session Settings can optionally be marked as TODO, meaning that they will be stored (uncompressed) in the Unreal session URL as part of the save header. This means their values will be loaded as soon as the game mode is initialized and before world actors are initialized.
 
 == Advanced Game Settings
 
