@@ -152,6 +152,15 @@ See xref:ForUsers/DedicatedServerSetup.adoc[Installing Mods on Dedicated Servers
 The xref:ForUsers/DedicatedServerSetup.adoc#CheckModDedicatedServerSupport['Checking if a Mod Supports Dedicated Servers' section]
 describes how to tell if an individual mod supports Dedicated Servers.
 
+[id="ConsoleSupport"]
+== Do mods work on consoles?
+
+No, mods do not work with Satisfactory for consoles (Xbox, Playstation).
+Limitations imposed by console manufacturers make this infeasible.
+
+Satisfactory https://satisfactory.wiki.gg/wiki/Console_release#Crossplay_and_interoperability[does not support PC-to-console cross-play, nor console dedicated servers],
+so playing with server side only mods is unfortunately also out of the question.
+
 == Are Satisfactory mods safe?
 
 _Or: 'Why does Satisfactory Mod Manager trigger my antivirus?'_
