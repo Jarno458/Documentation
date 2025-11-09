@@ -314,19 +314,9 @@ This has since been enhanced by community member Rovetown to fully automate the 
 
 [NOTE]
 ====
-The Script will try and rerun if it encounters any errors.
+The script will try and rerun if it encounters any errors.
 However, it may not always succeed in properly renaming all files.
-This can be due to several reasons, so if you encounter this, feel free to ask for help in the discord.
-
-If you get any Errors regarding Python Libraries, make sure you have all the required dependencies installed.
-These are:
-
-* os
-* subprocess
-* pathlib
-* shutil
-* logging
-
+This can be due to several reasons, so if you encounter this, feel free to ask for help in the Discord.
 ====
 
 == Generating a Complete Starter Project
