@@ -264,6 +264,14 @@ Check out
 xref:index.adoc#_for_developers[this section of the home page]
 for more information.
 
+[id="HowToOpenFolderPaths"]
+== How do I open folder paths mentioned in the docs?
+
+On Windows, you can open any of the folder paths mentioned here by:
+
+* Copy-pasting them into the link:https://www.digitalcitizen.life/run-window-windows-7-why-use-it-anymore/[Windows Run dialog]
+* Copy-pasting them into the link:https://uis.georgetown.edu/file-explorer/#accessfilesfolders[address bar of Windows File Explorer].
+
 == Where are my game files located?
 
 [id="Files_GameInstall"]
@@ -294,8 +302,8 @@ image:FAQ/LocalFiles_Epic.png[Browse Local Files on Epic]
 Dedicated Server, Linux, and Mac install locations vary significantly depending on how you set them up.
 
 In a Crossover (Mac) install, assuming your bottle is named "Steam", files will be at
-// NOTE: this path has been escaped with a \ in the source text to avoid an irrelevant docs compile warning https://discuss.asciidoctor.org/skipping-reference-to-missing-attribute-td7687.html
-`"$\{HOME}/Library/Application Support/CrossOver/Bottles/Steam/drive_c/Program Files (x86)/Steam/steamapps/common/Satisfactory"`
+// NOTE: using `+ +` to avoid Asciidoc seeing it as an attribute https://discuss.asciidoctor.org/skipping-reference-to-missing-attribute-td7687.html
+`+"${HOME}/Library/Application Support/CrossOver/Bottles/Steam/drive_c/Program Files (x86)/Steam/steamapps/common/Satisfactory"+`
 
 [id="Files_Mods"]
 === Mods
@@ -338,18 +346,16 @@ Note that some mods may have custom implementations or extra files that are not 
 [id="Files_Logs"]
 === Log Files
 
-You can find various log files at different locations:
-
 * `FactoryGame.log` is produced by running the game and includes both base-game and mod log messages.
-  ** The game client this file is stored in `%LOCALAPPDATA%/FactoryGame/Saved/logs`
-  ** Dedicated servers could have this file in `InstallDirectoryHere/FactoryGame/Saved/logs`
+  ** The game client stores its logs in `%LOCALAPPDATA%/FactoryGame/Saved/Logs`
+  ** Dedicated servers could have this file in `InstallDirectoryHere/FactoryGame/Saved/Logs`
     or potentially another location depending on how the server is hosted
+* Satisfactory Mod Manager's internal log files can be found at `%LOCALAPPDATA%\SatisfactoryModManager\logs`
 * (For mod developers) The Unreal Editor's crash logs can be found in one of the following locations
   depending on when/how it crashed:
   ** `%appdata%\Unreal Engine\AutomationTool\Logs\`
   ** `%LOCALAPPDATA%\UnrealEngine\<the engine version here>\Saved\Logs`
   ** `<your modding project folder>\Saved\Logs`
-* Satisfactory Mod Manager's internal log files can be found at `%LOCALAPPDATA%\SatisfactoryModManager\logs`
 
 [id="Files_SMMProfiles"]
 === Mod Manager Profiles
