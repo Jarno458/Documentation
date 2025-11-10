@@ -210,8 +210,7 @@ so you can search for `Play something bnk` to find a list of valid sound bnk fil
 
 Once you have found the bnk you want to extract
 (for example, `FactoryGame/Content/WwiseAudio/Event/19/Play_EQ_JetPack_Activate.bnk`)
-right click on it in FModel's "Packages" tab list and select `Export Raw Data (.uasset)`,
-which will export the bnk file despite the tooltip option claiming it will be a uasset.
+right click on it in FModel's "Packages" tab list and select `Export Raw Data`.
 
 Alternatively, you can extract the entire `Event` folder at once
 by right clicking on it in the "Folders" tab and selecting `Export Folder's Packages Raw Data (.uasset)`.
