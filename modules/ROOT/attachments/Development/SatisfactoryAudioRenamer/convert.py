@@ -96,7 +96,7 @@ def wem_to_wav(input_root, temp_root):
                     [str(VGMSTREAM), "-o", str(wav_path), str(wem_path)],
                     capture_output=True,
                     text=True,
-                    check=True,
+                    check=False,
                 )
                 if result.returncode != 0 or not wav_path.exists():
                     failed_count += 1
@@ -191,7 +191,7 @@ def retry_failed_conversions(temp_wav_root):
             [str(VGMSTREAM), "-o", str(wav_path), str(wem_path)],
             capture_output=True,
             text=True,
-            check=True,
+            check=False,
         )
         if result.returncode != 0 or not wav_path.exists():
             new_failures += 1
