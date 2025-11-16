@@ -318,7 +318,7 @@ Mods are stored in the link:#Files_GameInstall[game install directory] under `Fa
 [id="Files_SaveFiles"]
 === Save Files
 
-See link:#_how_do_i_backup_my_save_files[Backing Up Save Files]
+See link:#_how_do_i_backup_my_save_files[Backing Up Save Files].
 
 [id="Files_Blueprints"]
 === Blueprint Designer Files
@@ -386,13 +386,23 @@ The location of these files is mentioned link:#Files_Logs[above].
 
 == How do I verify my game files?
 
-On Steam:
+Game files can become corrupted for a variety of reasons,
+but thankfully both Steam and Epic offer built-in functionality
+to automatically check and repair game files, downloading new copies as necessary.
+
+[id="Verify_Steam"]
+=== On Steam
 
 image:FAQ/SteamVerifyIntegrity.png[Steam screenshot]
 
-On Epic:
+Learn more on the link:https://help.steampowered.com/en/faqs/view/0C48-FCBD-DA71-93EB[Steam Support page].
+
+[id="Verify_Epic"]
+=== On Epic
 
 image:FAQ/EpicVerifyIntegrity.png[Epic screenshot]
+
+Learn more on the link:https://www.epicgames.com/help/en-US/epic-games-store-c-202300000001639/launcher-support-c-202300000001735/how-do-i-verify-game-files-in-the-epic-games-launcher-a202300000017217[Epic Games Store Support page].
 
 == The mod manager can't download any mods
 
