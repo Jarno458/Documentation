@@ -4,21 +4,21 @@
 == Executive Summary
 
 First-person equipment is rendered in a separate pass, which causes projection mismatches at wide FOVs.
-*Panini Projection* corrects this by aligning equipment with world geometry, but is only effective between around *70–90° FOV*.
+*Panini Projection* corrects this by aligning equipment with world geometry, but is only effective between around *70-90° FOV*.
 
 Use *Master Materials + Instances* for scalable setups, or direct Panini nodes for quick one-off materials.
 
 == Overview
 
-In Unreal Engine (and Satisfactory), first-person equipment is drawn in a *separate render pass* so tools remain visible and don’t clip into the environment.
+In Unreal Engine (and Satisfactory), first-person equipment is drawn in a *separate render pass* so tools remain visible and don't clip into the environment.
 
-The problem: at wide FOVs, standard perspective projection can distort or even hide these meshes because their projection does not match the world’s.
+The problem: at wide FOVs, standard perspective projection can distort or even hide these meshes because their projection does not match the world's.
 
 The solution: *Panini Projection*, a special camera projection that reduces edge distortion by “straightening out” the view. This ensures that both the world and first-person meshes use the same projection math.
 
 [NOTE]
 ====
-Panini works best in the *70–90° FOV range*, with *90° FOV* being the sweetspot for Satisfactory.
+Panini works best in the *70-90° FOV range*, with *90° FOV* being the sweetspot for Satisfactory.
 
 Above 90°, it cannot fully compensate for distortion, leading to stretched or unnatural visuals.
 ====
@@ -38,12 +38,12 @@ With Panini, equipment meshes remain aligned with the world and display reliably
 
 == Why It Breaks Above 90° FOV
 
-Panini in Unreal is not a true projection matrix replacement — it’s a *post-process remap* applied after the camera renders the scene with standard perspective projection.
+Panini in Unreal is not a true projection matrix replacement — it's a *post-process remap* applied after the camera renders the scene with standard perspective projection.
 
 Key reasons it aligns at 90° but breaks above:
 
-- **Unreal’s camera is perspective-based**
-  The engine always uses a perspective projection matrix. Panini only remaps the output, so it’s not a full replacement camera type. Around 90°, Panini’s math lines up closely with perspective, so equipment and world still align.
+- **Unreal's camera is perspective-based**
+  The engine always uses a perspective projection matrix. Panini only remaps the output, so it's not a full replacement camera type. Around 90°, Panini's math lines up closely with perspective, so equipment and world still align.
 
 - **Non-linear distortion above 90°**
   Past ~90°, Panini starts stretching differently on horizontal and vertical axes.
@@ -82,7 +82,7 @@ Panini can be integrated into materials in two main ways, depending on whether y
 . Add a *Static Switch* to toggle Panini on/off.
 . Connect the `Apply Panini Projection` to the *Static Switch True* input.
 . Connect the result of `Make Material Attributes` to the *Static Switch False* input.
-. Connect the result to the Material’s *Material Attributes* output.
+. Connect the result to the Material's *Material Attributes* output.
 
 [IMPORTANT]
 ====
@@ -128,7 +128,7 @@ This reduces duplication, prevents errors, and ensures new equipment works corre
 
 [NOTE]
 ====
-Remember that Panini Projection only improves visuals within *70–90° FOV*.
+Remember that Panini Projection only improves visuals within *70-90° FOV*.
 
 Do not rely on it for extreme wide-angle setups.
 ====
