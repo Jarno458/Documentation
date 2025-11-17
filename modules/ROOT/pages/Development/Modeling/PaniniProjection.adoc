@@ -32,8 +32,8 @@ With Panini, equipment meshes remain aligned with the world and display reliably
 
 [cols="a,a", frame=none, grid=none]
 |===
-| image::Development/3DModeling/Panini_off.png[Panini OFF, title=Panini Disabled]
-| image::Development/3DModeling/Panini_on.png[Panini ON, title=Panini Enabled]
+| image::Development/3DModeling/Panini/Panini_off.png[Panini OFF, title=Panini Disabled]
+| image::Development/3DModeling/Panini/Panini_on.png[Panini ON, title=Panini Enabled]
 |===
 
 == Why It Breaks Above 90° FOV
@@ -66,9 +66,9 @@ If you want Panini to work reliably above 90° FOV, you must either:
 ====
 
 .Figure: FOV range comparison (70°, 90°, 120° with Panini)
-image::Development/3DModeling/70_fov.png[Panini effectiveness at 70 FOV, title=70 FOV]
-image::Development/3DModeling/90_fov.png[Panini effectiveness at 90 FOV, title=90 FOV]
-image::Development/3DModeling/120_fov.png[Panini effectiveness at 120 FOV, title=120 FOV]
+image::Development/3DModeling/Panini/70_fov.png[Panini effectiveness at 70 FOV, title=70 FOV]
+image::Development/3DModeling/Panini/90_fov.png[Panini effectiveness at 90 FOV, title=90 FOV]
+image::Development/3DModeling/Panini/120_fov.png[Panini effectiveness at 120 FOV, title=120 FOV]
 
 == Enabling Panini Projection on Equipment Materials
 
@@ -105,8 +105,8 @@ You can then create *Material Instances* and toggle Panini per-instance without 
 This approach is simpler for *one-off materials* but less reusable across multiple items.
 ====
 
-image::Development/3DModeling/Apply_Panini.png[Apply Panini, title=Apply Panini]
-image::Development/3DModeling/Direct_Panini.png[Direct Panini, title=Direct Panini]
+image::Development/3DModeling/Panini/Apply_Panini.png[Apply Panini, title=Apply Panini]
+image::Development/3DModeling/Panini/Direct_Panini.png[Direct Panini, title=Direct Panini]
 
 === Choosing the Right Approach
 
