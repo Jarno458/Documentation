@@ -17,7 +17,7 @@ In Satisfactory, like many FPS games, first-person equipment is drawn in a speci
 such as ensuring the pioneer's arms and tools don't clip into the environment when you get really close to things.
 
 To limit visual distortions when the user is playing with a large FOV,
-a post-processing shader called a **Panini Projection** is applied to the world and the player's first person models.
+a vertex shader called a **Panini Projection** is applied to the world and the player's first person models.
 To learn more about this technique, see 
 http://tksharpless.net/vedutismo/Pannini/[this article],
 which was originally linked from Unreal Engine documentation page about a
@@ -28,7 +28,7 @@ so it's best to work on these meshes at a 90°.
 This will minimize errors and let you get the best idea for how it sits on the screen, even in a modeling program.
 
 Note that in game option "First Person FOV Modifier" adjusts the model's scale, not the Camera FOV.
-There may be some math done to the parameters fed to the panini projection, but if you hook up everything right you won't need to worry!
+There may be some math done to the parameters fed to the Panini Projection, but if you hook up everything right you won't need to worry!
 
 == In-Game Appearance
 
@@ -77,7 +77,14 @@ Custom materials are expensive to render and complicated to set up.
 Use your new textures with Material Instances of base game materials wherever possible.
 ====
 
-Panini can be integrated into custom materials in two main ways, depending on whether your material uses Material Attributes.
+Panini Projection can be integrated into custom materials in two main ways, depending on whether your material uses Material Attributes.
+
+Use Material Instances to enable toggling the effect per-instance without recompiling the shader.
+This is particularly useful because the models of other players, and 3rd person view models or dropped items, should not have the effect applied.
+
+:usage_info_bullet: Create material instances as needed. +
+Remember to set `UsePaniniProjection` accordingly depending on if the material is used in first person.
+For equipment items, you will probably need one instance with it on for first person, and one with it off for dropped items.
 
 [id="MF_ApplyPaniniProjection"]
 === 1. Using `MF_ApplyPaniniProjection` (Material Attributes workflow)
@@ -85,20 +92,18 @@ Panini can be integrated into custom materials in two main ways, depending on wh
 . In your material's settings, enable *Use Material Attributes*.
 . Add a new `MF_ApplyPaniniProjection` node to the material graph.
   Ensure you did not accidentally use the one that takes parameters directly.
-. Use `MakeMaterialAttributes` to gather outputs.
+. Use `MakeMaterialAttributes` to gather outputs from your existing material code.
 . Feed the result into Apply Panini Projection.
-. Add a `Static Switch` to toggle Panini on/off.
-. Connect the Panini Projection node to the *Static Switch True* input.
-. Connect the result of Make Material Attributes to the *Static Switch False* input.
+. Add a `StaticSwitchParameter` node named "UsePaniniProjection" and set its default value to true.
+. Connect the Panini Projection node to the *UsePaniniProjection True* input.
+. Connect the result of Make Material Attributes to the *UsePaniniProjection False* input.
 . Connect the result to the material's *Material Attributes* output.
+. {usage_info_bullet}
 
-Use Material Instances to enable toggling the effect per-instance without recompiling the shader.
-This is particularly useful because the models of other players, and 3rd person view models) should not have the effect applied.
-
-image::Development/3DModeling/Panini/Apply_Panini.png[Apply Panini, title=Apply Panini]
+image::Development/3DModeling/Panini/Apply_Panini.png[title=Apply Panini]
 
 [id="MF_PaniniProjection"]
-=== 2. Using `Panini Projection` directly (non-attributes workflow)
+=== 2. Using `MF_PaniniProjection` directly (non-attributes workflow)
 
 . Add a new `MF_PaniniProjection` node to the material graph.
 . Add 3 `CollectionParameter` nodes to the material graph.
@@ -115,10 +120,11 @@ image::Development/3DModeling/Panini/Apply_Panini.png[Apply Panini, title=Apply 
 | Scale | Screen Space Scale
 |===
 . Connect MF_PaniniProjection's World Position Offset to either your material's existing World Position Offset code, or a Constant3Vector node of `0,0,0` if you have none.
-. Add a `StaticSwitch` to toggle Panini on/off during testing, and set its Value to true.
-. Feed the result of the Panini Projection into the *Static Switch True* input.
-. Plug a Constant3Vector node of `0,0,0` into the *Static Switch False* input.
+. Add a `StaticSwitchParameter` node named "UsePaniniProjection" and set its default value to true.
+. Feed the result of the Panini Projection into the *UsePaniniProjection True* input.
+. Plug a Constant3Vector node of `0,0,0` into the *UsePaniniProjection False* input.
 . Plug the result into your material's World Position Offset output.
-. Do whatever else you were planning to do with the other material outputs.
+. Do whatever else you were planning to do with the other material outputs.3
+. {usage_info_bullet}
 
-image::Development/3DModeling/Panini/Direct_Panini.png[Direct Panini, title=Direct Panini]
+image::Development/3DModeling/Panini/Direct_Panini.png[title=Direct Panini]
