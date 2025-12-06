@@ -10,7 +10,7 @@ The most convenient ways to apply the effect to your mod's content are:
 - Making a material instance from a base-game material that already has supports it
 - Using the relevant material node in your own materials
 
-== Overview
+== Behind the Scenes
 
 In Satisfactory, first-person equipment is drawn in a separate render pass
 to ensure the pioneer's arms and tools don't clip into the environment when you get really close to things.
@@ -24,13 +24,13 @@ The projection's implementation looks the best with an FOV of 90°,
 so Satisfactory always renders the player's first person viewmodels with a fixed 90° FOV.
 Note that in game option "First Person FOV Modifier" adjusts the model's scale, not its FOV.
 
-== In-Game Appearance Screenshots
+== In-Game Appearance
 
-You can tell a material is not set up properly if its appearance changes noticeably
-when the user adjusts their FOV settings.
+You can tell a material is not set up properly if its position changes noticeably
+when the user adjusts their FOV.
 
 The below screenshots showcase the appearance of ExampleMod's example trinket at different "Field of View" game option values.
-The left side shows has the projection enabled, while the right side has it disabled.
+The left side has the projection enabled, while the right side has it disabled.
 
 Note that the model does not connect correctly when the projection is disabled at FOVs other than 90°.
 
@@ -55,11 +55,13 @@ Note that the model does not connect correctly when the projection is disabled a
 == Reusing Base Game Materials
 
 A number of base game materials already have Panini Projection support built in.
-It can be enabled from material instances via their material parameters, usually called something like "UsePaniniProjection".
+You can create material instances from them to easily enable the effect on your modded content
+assuming the materials' other behaviors suit your needs.
+It can be enabled via their material parameters, usually called something like "UsePaniniProjection".
+This is the approach taken by Example Mod's Example Trinket, Desc_Trinket_TvOfKnowledge.
 
 Examples of base game materials that support Panini Projection include equipment and trinket materials, as well as MM_FactoryBaked.
 For example, trinkets can use the `Asset_Master` material with the "UsePaniniProjection" option enabled.
-This is the approach taken by Example Mod's Example Trinket, Desc_Trinket_TvOfKnowledge.
 
 == Enabling Panini Projection on Custom Materials
 
@@ -69,11 +71,12 @@ Panini can be integrated into custom materials in two main ways, depending on wh
 === 1. Using `MF_ApplyPaniniProjection` (Material Attributes workflow)
 
 . In your Material settings, enable *Use Material Attributes*.
-. Use `Make Material Attributes` to gather outputs.+
-. Feed the result into `Apply Panini Projection`.
-. Add a *Static Switch* to toggle Panini on/off.
-. Connect the `Apply Panini Projection` to the *Static Switch True* input.
-. Connect the result of `Make Material Attributes` to the *Static Switch False* input.
+. Use `MakeMaterialAttributes` to gather outputs.
+. Add a new `MF_ApplyPaniniProjection` node to the material graph.
+. Feed the result into Apply Panini Projection.
+. Add a `Static Switch` to toggle Panini on/off.
+. Connect the Panini Projection node to the *Static Switch True* input.
+. Connect the result of Make Material Attributes to the *Static Switch False* input.
 . Connect the result to the Material's *Material Attributes* output.
 
 Use Material Instances to enable toggling the effect per-instance without recompiling the shader.
@@ -86,7 +89,7 @@ image::Development/3DModeling/Panini/Apply_Panini.png[Apply Panini, title=Apply 
 
 . Add a new `MF_PaniniProjection` node to the material graph.
 . Connect the parameters: *d* (distance), *s* (squeeze), *Screen Space Scale*, and *WPO*.
-. Add a *Static Switch* to toggle Panini on/off.
+. Add a `Static Switch` to toggle Panini on/off.
 . Feed the result of the Panini Projection into the *Static Switch True* input.
 . Plug a `Texture Coordinate` Node into the *Static Switch False* input.
 . Plug the result into the respective `Texture Sample` *UV* input.
