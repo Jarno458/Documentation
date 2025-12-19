@@ -6,7 +6,7 @@ it's time to start setting the project up.
 
 [IMPORTANT]
 ====
-Are you a returning Satisfactory modder who already has a past modding environment set up?
+Are you a returning Satisfactory mod developer who already has a past modding environment set up?
 Make sure to follow the
 xref:Development/UpdatingToNewVersions.adoc[_Updating your Mod_]
 guide before following these directions.
@@ -188,13 +188,60 @@ xref:CommunityResources/incredibuild.adoc[here].
 
 Open up the `FactoryGame.sln` file in your project folder.
 
-[TIP]
-====
+[id="vs_popups"]
+=== Popups and Notices
+
+You'll be presented with a few notices upon opening the solution for the first time.
+We'll go through each of these below, as some of them can safely be ignored,
+while others could break your install if you take the wrong action.
+
+[id="vs_popups_unsupported_projects"]
+==== Unsupported Projects
+
+Visual Studio may tell you "These projects are either not supported or need project behavior impacting modifications <...>"
+in a pop-up window upon opening the solution.
+
+**It is safe to click "OK" on this message and dismiss it.**
+
+Even though some of the components are outdated or out of support,
+they are the ones required by Satisfactory and Unreal and must be used.
+
+[id="vs_popups_additional_components"]
+==== Additional Components
+
 Visual Studio may tell you "Based on your solution, you might need to install extra components for a full development experience" at the top of the Solution Explorer window.
-It is safe to ignore this message.
+
+**It is safe to ignore this message.**
+
 Alternatively, you can install the requested components to keep Visual Studio from complaining about this
 at the cost of additional disk space.
-====
+
+[id="vs_popups_package_vulnerabilities"]
+==== Packages with Vulnerabilities
+
+Visual Studio may tell you "This solution contains packages with vulnerabilities" at the top of the Solution Explorer window.
+
+**It is safe to ignore this message.**
+
+We must use these exact package versions to match what the game and engine are using, so they should not be updated.
+
+[id="vs_popups_ue_integration_config"]
+==== Unreal Engine Integration Configuration
+
+An editor tab titled "Unreal Engine Integration Configuration" opens on startup by default.
+It assists with initial setup of tools installed with the 'Game Development with {cpp}' workload.
+
+**Uncheck the "Show on startup" checkbox at the top and close the tab.**
+Unfortunately some of the changes required to make the custom engine work are not compatible with these tools.
+Do NOT set up the "Visual Studio Integration Tool" or "Unreal Engine Test Adapter",
+as they will make changes to the project and engine that break your ability to compile the editor and/or package mods.
+
+If you accidentally enable one of these,
+redownload the starter project and reinstall the engine on top of your existing install to repair it.
+
+image:BeginnersGuide/CloseIntegrationConfig.png[Uncheck "Show on startup" and close the "Unreal Engine Integration Configuration" tab]
+
+=== Building the Solution
 
 Once Visual Studio loads,
 you should see a folder tree in the Solution Explorer containing entries for
@@ -248,13 +295,12 @@ you must close the Editor and rebuild `Development Editor`
 from Visual Studio for the changes to take effect.
 
 Alpakit (a tool discussed later) will take care of building Shipping for you when required later,
-but you can still build it from Visual Studio if you want to.
-To build shipping from Visual Studio,
-use the `Shipping` configuration and build the `FactoryGameSteam` or `FactoryGameEGS` project instead of `FactoryGame`.
+but it's still possible to manually build them from Visual Studio.
+More information can be found on the xref:Development/Cpp/setup.adoc#Compile[{cpp} Modding Setup] page.
 ====
 
 [id='Compiling_Troubleshooting']
-=== Troubleshooting
+=== Build Troubleshooting
 
 Almost all warnings, and occasionally some errors, reported by the editor can be safely ignored during the build process.
 This section will help you decide how to proceed if you encounter errors while building.
@@ -346,35 +392,45 @@ link:#_project_compilation[compile the editor from Visual Studio]
 to find out why it's erroring and return here when finished with that step.
 Consider seeking help on the Discord if you are stuck here.
 
-Once you load into the Editor,
-you might see a popup that says 'New plugins are available.'
-You can safely dismiss this popup.
+[id="FirstTimeUserPopups"]
+=== First Time User Pop-Ups
 
-== Familiarize Yourself with the Editor
+Opening the editor for the first time may present you with a few pop-up messages to address.
 
-Now is a good time to familiarize yourself with
-the Unreal Engine editor through various other tutorials.
-We suggest you take the 'Welcome to the Unreal Editor'
-guided tutorial that the editor should be telling you about
-if you haven't taken or dismissed it yet.
+==== "GeneratedSoundBanks folder does not seem to be set"
 
-We also suggest the following resources:
+If you see a message: "GeneratedSoundBanks folder does not seem to be set. Would you like to open the settings window to set it?",
+you need to change a couple Wwise settings.
 
-- https://docs.unrealengine.com/5.3/en-US/unreal-editor-interface/[Unreal Editor Interface] -
-Provides a high-level overview of what each of the editor panels do.
-- https://docs.unrealengine.com/5.3/en-US/content-browser-in-unreal-engine/[Content Browser] -
-How to access the Content Browser, including adding multiple Content Browser panels to your viewport.
-- https://docs.unrealengine.com/5.3/en-US/content-browser-interface-in-unreal-engine/[Content Browser Interface] -
-How to use the various features offered by the Content Browser.
+Click `Yes` on the popup to open the settings window.
+Or, if you've already closed the popup, open
+include::./../_includes/ue-editor-set-wwise-generated-soundbanks.adoc[]
 
-[NOTE]
-====
+This pop-up should no longer appear next time you open the editor.
+
+==== "New Plugins Are Available"
+
+If you see a pop-up that says "New plugins are available.",
+you can safely dismiss this popup, as the plugins required for modding are already installed and enabled.
+
+==== Level Viewport Errors
+
 You may see error messages in the editor's Level `Viewport 1` tab such as
 "LANDSCAPE: 64 ACTORS WITH PHYSICAL MATERIALS NEED TO BE REBUILT".
 
 It is usually safe to ignore errors in the Level Viewport tab
 because errors displayed there are unrelated to typical mod content.
-====
+
+== Familiarize Yourself with the Editor
+
+Now is a good time to familiarize yourself with
+the Unreal Engine editor through various other tutorials.
+
+We suggest the following resources:
+
+include::./../_includes/editor-familiarize-list.adoc[]
+
+You can find more on the xref:Development/UnrealEngine/UnrealLearningResources.adoc[Unreal Learning Resources page].
 
 == (Optional) Modify Editor Color Scheme
 

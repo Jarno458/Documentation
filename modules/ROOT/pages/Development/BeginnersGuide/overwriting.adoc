@@ -8,20 +8,7 @@ However, it is the most practical way to achieve certain functionality.
 == Use a Library Mod
 
 Some other modders have already created mods that assist with the process of overwriting or modifying content.
-They can save you a lot of time.
-
-=== TweakIt
-
-TweakIt by Feyko allows you to write
-https://lua.org/[Lua] scripts to programmatically modify game content.
-
-Documentation can be found via the 'docs switcher' on this site's sidebar, or
-https://docs.ficsit.app/tweakit/latest/index.html[here]
-
-The mod has yet to be officially released,
-but you can download early builds from the https://discord.gg/2kV6AHbzZK[TweakIt discord],
-and find its source code https://github.com/Feyko/TweakIt[here].
-Note that the plugin has not been updated to support Satisfactory 1.0 as of March 2025.
+They can save you a lot of time, especially if you want to modify many different assets.
 
 === ContentLib
 
@@ -31,44 +18,77 @@ Additionally, it offers a limited form of CDO modification (described below) via
 
 Documentation, including a step-by-step walkthrough of some common tasks, can be found https://docs.ficsit.app/contentlib/latest/index.html[here].
 
-The mod has been officially released, and its documentation describes how to configure your mod to depend on it.
+=== TweakIt
 
-== Use CDO Manipulation
+TweakIt was a mod by Feyko that allowed you to write
+https://lua.org/[Lua] scripts to programmatically modify game content.
+The mod has been discontinued, but its source code is available https://github.com/Feyko/TweakIt[on GitHub]
+and its https://docs.ficsit.app/tweakit/latest/index.html[documentation] is available for historical purposes.
+
+== Use Class Default Object (CDO) Manipulation
 
 If you still want to overwrite content without using a library,
-the correct mechanism for doing so is **Class Default Object (CDO)** manipulation,
+the correct mechanism for doing so is **Class Default Object manipulation**,
 sometimes referred to as a **CDO Edit**.
 
-To perform a CDO modification, get the class default object of the
-class you're trying to override and change the relevant properties.
+[id="ExplainCdo"]
+=== What is a Class Default Object?
 
-Changes to CDO's are reflected on all of the objects of the selected class that are created after the modification.
-Be mindful when using this, because you can break other mod and vanilla content without leaving a trace.
-For safety reasons, the function will log a warning when you're attempting to modify a class not owned by your mod.
+A https://forums.unrealengine.com/t/what-is-cdo/310820[Class Default Object (CDO)] is a template,
+like a metal cookie cutter used to stamp cookies out of a sheet of dough.
+When a new instance of the class is created, it copies the CDO's values as the initial values of its properties.
+By changing properties on the CDO, you can influence the initial state of all instances of that class _created after the edit_.
 
-Keep in mind that when performing a CDO,
-you're not actually changing anything on existing objects,
-you're just overwriting property values on "archetype" objects.
-You may still need to get all existing instances of the class
+[id="CdoEditApproach"]
+=== Modifying a CDO
+
+To perform a CDO edit,
+first obtain the class default object of the class you're trying to override
+then use setter functions or directly modify values of the relevant properties.
+
+Keep in mind that when modifying properties on a CDO,
+you're not changing anything on _existing_ object instances -
+you're only changing the template.
+Depending on what kind of content you are modifying and when your code performs the edit,
+some instances may have already been created using the old CDO values.
+For example, buildings already placed in the save file load in earlier than some mod code executes.
+
+Your code may also need to fetch all existing instances of the class
 and modify their values too to ensure they match your new desired value.
 Performing your CDO modifications earlier in the mod loading process can sometimes remove the need for this extra step.
 
-When performing CDO manipulation, you need to keep the CDO in-memory to ensure that Unreal does not garbage collect your patched object (and its descendants) and later load it unmodified from disk, undoing your change. +
-To do this, you need to reference the CDO in a property. More on this in the language-specific sections below.
+When performing CDO manipulation, you must keep a reference to the CDO in memory
+to ensure that Unreal does not garbage collect your patched object (and its descendants) and later load it unmodified from disk, undoing your change.
+To do this, you need to reference the CDO in a property.
+More on this in the language-specific sections below.
 
-=== Understanding the Limits of CDOs
+[WARNING]
+====
+Be mindful when modifying class default objects as you can break other mod and vanilla content without leaving a trace.
+For safety and troubleshooting reasons, SML's helper function logs a warning when you access a class not owned by your mod.
+====
+
+[id="CdoLimitations"]
+=== Understanding the Limits of CDO Edits
 
 It is important to understand that Class Default Object modification is not capable of accomplishing everything.
 
-CDO modification can only influence behavior and properties that already exist an object - it can't define new behaviors.
+====
+CDO modification can only influence behaviors and properties that already exist an object - it can't define new behaviors.
+====
+
+For example, a CDO edit can add a fluid to Space Elevator phase costs (because fluids are a type of item internally),
+but the Space Elevator doesn't have any pipe ports, so it can't be submitted!
+You can't add a pipe port to the Space Elevator with CDO edits alone because there are more things going on under the hood than just the data field available on CDOs.
 
 Also, the way some features are implemented behind the scenes
 could mean that modifying the class default object could have no effects whatsoever,
 as the values you changed could be overwritten by something else.
 
-=== Blueprint
+[id="CDO_Blueprint"]
+=== Via Blueprint
 
-In Blueprint, you can use the `Get Class Default Object` node to get the class default object.
+In Blueprint, you can use the SML `Get Class Default Object` node to get the class default object.
 Afterwards, you can use the class' existing setters to modify fields. +
 You might need to use an xref:Development/ModLoader/AccessTransformers.adoc[Access Transformer]
 to make the field that you intend to change accessible from blueprints.
@@ -77,9 +97,12 @@ To keep a reference to the CDO, create a property of type Object in the blueprin
 Set the property's value to be the CDO before manipulating the object. +
 If you are modifying multiple CDOs, you can make the property an array of objects instead, and add each CDO to the array.
 
+====
 Check out ExampleMod's `SubGameWorld_ExampleMod_SchematicCdoEdit` for a code example.
+====
 
-=== {cpp} Example
+[id="CDO_Cpp"]
+=== Via {cpp}
 
 Here's an example from Kyrium's KBFL for adding additional allowed classes to the Pressurizer and its extractor nodes.
 
@@ -102,9 +125,12 @@ void UKBFLResourceNodeDescriptor_ResourceWell::AfterSpawning()
 }
 ```
 
-In this example, the CDO-referencing properties are `frackingActivatorCDO` and `frackingExtractorCDO`.
-To properly reference CDOs, create a property of type `UObject*` in the class where you also change the CDO. Make sure to mark the property as `UPROPERTY` or UE will not know about the property. +
-If you are modifying multiple CDOs, you can make the property a `TArray<UObject*>` instead, and add each CDO to the array.
+In this example, the CDOs are held externally in the `frackingActivatorCDO` and `frackingExtractorCDO` properties.
+To properly retain the CDOs, create a property of type `UObject*` somewhere in your mod that will be persistent,
+such as a xref:Development/ModLoader/ModModules.adoc[Game Instance Module].
+Make sure to mark the property as `UPROPERTY` or UE will not know about the property.
+
+If you are modifying multiple CDOs, you can make the property a `TArray<UObject*>` instead and add each CDO to the array.
 
 == Extending Existing Content
 
@@ -121,5 +147,6 @@ by extending its placeholder, we will still be able to use those features at run
 If a CDO modification isn't working and extending the existing content is not an option,
 hooking existing functions on the content may allow for the modifications you want.
 
-Hooking is a very complicated topic covered in more detail on
-xref:Development/Cpp/hooking.adoc[its own page].
+Hooking is a more complex topic covered on separate pages for
+xref:Development/ModLoader/BlueprintHooks.adoc[Blueprint Hooking] and 
+xref:Development/Cpp/hooking.adoc[Native {cpp} Hooking].

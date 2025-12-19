@@ -14,10 +14,9 @@ https://discord.ficsit.app[Discord server].
 
 == Installing the Mod Manager
 
-To use mods you will need to install the Satisfactory Mod Manager (SMM)
-which takes care of all the configurations at install,
-and is also the best way to get mods working and into the game.
-Learn how to install and use the Mod Manager on the
+To use mods you will need to install the **Satisfactory Mod Manager (SMM)**, a tool that automatically takes care of all mod installation and configuration steps for you.
+It's the best and quickest way to get started playing with mods.
+Learn how to install and use it on the
 xref:ForUsers/SatisfactoryModManager.adoc[Using the Mod Manager] page.
 
 == Discovering New Mods
@@ -27,8 +26,8 @@ but there's more than one way to peruse the list.
 
 === Via the Mod Manager
 
-You can browse the list of all available mods directly within your mod manager!
-Make sure that your "Show" dropdown is set to "Compatible".
+You can browse the list of all available mods directly within the mod manager!
+Make sure that your "Show" dropdown is set to "Compatible", ensuring that only known-working mods are displayed.
 Explore the options by scrolling, or search for a specific mod with the search bar.
 Click on a mod to open its mod page in an details panel to the side.
 
@@ -67,8 +66,8 @@ Generally, most mods will require you to unlock something in the HUB or MAM befo
 Mods can be configured from the 'Mods' tab on the main menu,
 or from in-game via the 'Mod Configs' tab on the pause menu.
 
-Some mods will provide a support link, such a documentation site or a Discord join link.
-You can access this from the in-game mods menu via the "Get Support" button.
+Some mods will provide a support link, such as a documentation site or a Discord join link.
+You can access this from the in-game Mods menu via the "Get Support" button.
 Note that the button will not appear if no link is provided by that mod.
 It is likely that the same link is present on the mod's page on ficsit.app.
 

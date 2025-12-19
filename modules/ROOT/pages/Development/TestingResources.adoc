@@ -73,8 +73,13 @@ You can shave some time off of this process by launching via a script that loads
 In order to use this script, create a file with the `.ps1` extension somewhere convenient to you.
 
 Next, copy the contents of the below codeblock into the file.
-Note that you will have to modify the section near the top
+
+[IMPORTANT]
+====
+You must modify the section near the top of the script
+labeled `Configure this section`
 to match the location of files on your system.
+====
 
 If you have never ran a powershell script before on your Windows install,
 you may need to
@@ -219,12 +224,12 @@ function ResolveGamePathFromParams() {
 		$actualBranch = "steam"
 	}
 	$gamePathInfo = $selectedSide[$actualBranch]
-	if (($gamePathInfo -eq $null) -or ($gamePathInfo -eq "UNSET")) {
+	if ($gamePathInfo -eq $null) {
 		Write-Error "Requested branch '$actualBranch' for side '$side' was not defined in launcher '$launcher' in your script config options"
 		exit 1
 	}
 	$gameDir = $gamePathInfo["path"]
-	if ($gameDir -eq $null) {
+	if (($gameDir -eq $null) -or ($gameDir -eq "UNSET")) {
 		Write-Error "Selected game install '$selectedLauncher > $selectedSide > $actualBranch' is missing 'path' data, it should be the root directory of the install"
 		exit 1
 	}

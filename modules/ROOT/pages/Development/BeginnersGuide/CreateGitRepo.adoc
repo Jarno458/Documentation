@@ -144,7 +144,7 @@ https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-d
 
 The custom engine version used in the Satisfactory Modding community has been modified to allow Unreal Engine's Git integration to recognize and work with multiple git repos in a single project.
 
-To enable, navigate to "Tools" > (Source Control heading) > "Connect to Source Control...".
+To enable, navigate to "Tools" > (Revision Control heading) > "Connect to Revision Control...".
 Select Git from the dropdown, then click "Accept Settings".
 
 You can now right click on assets in the Content Browser to view their change history, diff assets, and more.

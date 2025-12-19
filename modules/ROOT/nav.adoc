@@ -54,13 +54,13 @@
         *** xref:Development/Modeling/setup.adoc[Workflow Setup]
         *** xref:Development/Modeling/MainMaterials.adoc[Main Materials]
         *** xref:Development/Modeling/style.adoc[Style Guide]
+        *** xref:Development/Modeling/PaniniProjection.adoc[Panini Projection]
     ** xref:Development/UnrealEngine/index.adoc[Unreal Engine]
-        *** xref:Development/UnrealEngine/Code.adoc[Code]
-        *** xref:Development/UnrealEngine/BluePrints.adoc[Blueprints]
-        *** xref:Development/UnrealEngine/Editor/index.adoc[Unreal Editor]
-            **** xref:Development/UnrealEngine/Editor/MainWindow.adoc[Main Window]
+        *** xref:Development/UnrealEngine/UnrealLearningResources.adoc[Unreal Learning Resources]
         *** xref:Development/UnrealEngine/CoreRedirect.adoc[Core Redirects]
         *** xref:Development/UnrealEngine/StringClasses.adoc[String Classes]
+        *** xref:Development/UnrealEngine/Code.adoc[Code]
+        *** xref:Development/UnrealEngine/BluePrints.adoc[Blueprints]
     ** xref:Development/Satisfactory/index.adoc[Satisfactory]
         *** xref:Development/Satisfactory/Multiplayer.adoc[Multiplayer]
         *** Game Features
@@ -128,6 +128,7 @@
     ** xref:Development/ReuseGameFiles.adoc[Reusing Base Game Files]
     ** xref:Development/ExtractGameFiles.adoc[Extracting Game Files]
     ** xref:Development/TestingResources.adoc[Testing/Multiplayer Testing]
+// TODO ** xref:Development/OptionalModDependencies.adoc[Optional Mod Dependencies]
     ** xref:Development/OpenSourceExamples.adoc[Learning from Open Source Mods]
     ** xref:UploadToSMR.adoc[Uploading your Mod to SMR]
 
@@ -144,6 +145,8 @@
 // * Translating Mods
 //     ** xref:Translation/GetStartedTranslating.adoc[Get Started Translating]
 //     ** xref:Translation/UsingTolgee.adoc[Using Tolgee]
+//     ** For Users
+//         *** TODO
 //     ** For Mod Developers
 //         *** xref:Translation/Developers/RequestTolgeeProject.adoc[Using Tolgee]
 //         *** xref:Development/Localization.adoc[Localizing Mods]

@@ -14,31 +14,19 @@ check out our xref:Development/BeginnersGuide/LearnGit.adoc[mini tutorial] that 
 
 == What Branch to Clone
 
-====
-If you are looking to develop mods for Update 1.0,
-follow the link:https://docs.ficsit.app/satisfactory-modding/v3.10.0/index.html[SML v3.10.0] documentation instead.
-However, we strongly suggest developing mods for Update 1.1 instead as it will be released to the stable branch on June 10th.
-====
+// needed for :archiveactionphrase:
+include::../_includes/repo-versions.adoc[]
 
-// When updating the below, remember to update StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, and dependencies.adoc (engine)
-====
-This is the *latest stable* version of the docs.
-// This is the *development* version of the docs.
+:verbphrase: clone
+:verbphraseCaps: Clone
+:actionphrase: .
+:archiveactionphrase: the v{this-archive-version} tag.
 
-// Stable (Release) and Experimental are currently both the same version - 1.0 Release.
+include::../_includes/branch-notice.adoc[]
 
-Clone the **`master` branch** to develop a mod for the stable version of SML.
-// You should clone the **`dev` branch** because SML 3.8.? is not released yet.
+Go to this GitHub repository:
+https://github.com/satisfactorymodding/SatisfactoryModLoader/
 
-// You should clone either the **`dev` branch** or the **`master` branch**.
-// Of those two, you probably want whichever branch was pushed to most recently, which you can see
-// https://github.com/satisfactorymodding/SatisfactoryModLoader/branches[on the GitHub repository].
-
-If you're uncertain about which branch to clone, **ask us on the Discord**.
-====
-
-https://github.com/satisfactorymodding/SatisfactoryModLoader/[Here]
-is a link to the GitHub page of repository to clone.
 Get the clone URL via the **`<> Code`** dropdown button on the GitHub page.
 
 If you just followed the xref:Development/BeginnersGuide/LearnGit.adoc[mini git tutorial],
@@ -48,7 +36,7 @@ to use GitHub Desktop to clone the repository.
 Otherwise, use the git clone method of your choice.
 
 Your Git client will probably start you on the `master` branch by default,
-so you may have to switch branches to the branch you actually intended to clone.
+so you may have to switch branches to the branch or tag you actually intended to clone.
 
 You can move the cloned repository folder later, and you can name it whatever you'd like.
 Make sure to read the notes on the
@@ -61,7 +49,7 @@ and you have switched to the branch you intend to use.
 [IMPORTANT]
 ====
 Many Git clients will automatically clone the repository's default branch.
-Make sure it has actually cloned the branch you intended to before proceeding.
+Make sure you're on the branch/tag you intended before proceeding.
 ====
 
 == Next Steps

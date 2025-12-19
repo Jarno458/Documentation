@@ -35,17 +35,30 @@ You can learn more about how holograms work on the xref:Development/Satisfactory
 ====
 
 As you can see in the `Components` pane in the top left, the actor already contains a few components.
-But not any visuals, so, now add a new FGColoredInstancedMeshProxy component in the center of the viewport.
-The build gun uses the origin when targeting the mesh to be built or snapped.
-You can use link:{attachmentsdir}/BeginnersGuide/simpleMod/Mesh_DocBuild.fbx[this example Mesh], the Plantpot of Knowledge, for your buildable.
+These are inherited from the parent class `FGBuildable`.
 
-This Actor is also where you can define the snapping area and the clearance area, but we won't do that for now. Look to other machines and examples for inspiration as there are several relevant settings to make those behaviors work correctly.
+Note that the building does not currently have any visuals.
+To fix this, add a new `FGColoredInstancedMeshProxy` component in the center of the viewport.
+This component is an optimized version of the base Unreal static mesh component that supports Satisfactory's Customizer painting system.
+To tell it what mesh to display, assign one in the "Static Mesh" field of the component's Details panel.
+Import link:{attachmentsdir}/BeginnersGuide/simpleMod/Mesh_DocBuild.fbx[this example Mesh], the Plantpot of Knowledge,
+which we'll use for this building.
+Use the default import settings when prompted.
+
+The build gun uses the origin when targeting the mesh to be built or snapped.
+This Actor is also where you can define the snapping area and the clearance area (mClearanceData), but we won't do that for now.
+Look to other machines and examples for inspiration as there are several relevant settings to make those behaviors work correctly.
 
 == Make it Paintable
 
-We want to make our buildable xref:Development/Satisfactory/Paintable.adoc[paintable], meaning, able to be painted it with the paint gun. Because the `FGBuildable`-class already provides a basic implementation for that, we just need our buildable's mesh to use the `MI_Factory_Base_01` material. The provided example mesh already provides a proper UV map for said material, so you will not need to edit the UVs of the provided mesh. You will need to do so for your own models. More info on the materials already in the game can be found at xref:Development/Modeling/MainMaterials.adoc[Main Materials] documentation page. 
+We want to make our buildable xref:Development/Satisfactory/Paintable.adoc[paintable], meaning, able to be colored with the Customizer.
+Because the `FGBuildable`-class already provides a basic implementation for that, we just need our buildable's mesh to use the `MI_Factory_Base_01` material.
+The provided example mesh already provides a proper UV map for said material, so you will not need to edit the UVs of the provided mesh.
+You will need to do so for your own models.
+More info on the materials already in the game can be found at xref:Development/Modeling/MainMaterials.adoc[Main Materials] documentation page. 
 
-You must ensure that the materials of the Mesh and Buildable are set to point to a material called `MI_Factory_Base_01` within `+Content/FactoryGame/-Shared/Material+`. If this does not exist, create a placeholder material in its place, and it will point to the correct texture within the game.
+You must ensure that the materials of the Mesh and Buildable are set to point to a material called `MI_Factory_Base_01` within `+Content/FactoryGame/-Shared/Material+`.
+If this does not exist, create a placeholder material in its place, and it will point to the correct texture within the game.
 
 [WARNING]
 ====
@@ -116,7 +129,8 @@ That's it! You don't need to register anything else. When the recipe gets loaded
 
 == Trying it Out
 
-If you load up the game now, you should be able to build the Doc Build in game, but it is purely an object that sits there and exists. You should be able to paint it with the paint tool, and it should look roughly like it does in the icon image.
+If you load up the game now, you should be able to build the Doc Build in game.
+You should be able to paint it with the Customizer, and it should look roughly like it does in the icon image.
 
 == Troubleshooting
 

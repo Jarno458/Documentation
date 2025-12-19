@@ -53,18 +53,8 @@ Regardless of the option you chose,
 consider reading the link:#CreateCppMod_Manual[Creating the Mod-Module From Scratch] section
 to get a better understanding of the purpose of the files involved in a {cpp} mod.
 
-[id="CreateCppMod_AlpakitTemplate"]
-=== Option 1: Using the Alpakit Template
-
-The Alpakit Create Mod wizard can automatically create a blank {cpp} mod for you.
-You can learn more about the wizard on the
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_unreal_plugin_creation[Plugin Setup and Game World Module] page.
-Select the "{cpp} and Blueprint" template.
-
-After using the wizard, advance to the link:#AddClass[Adding New Classes] section of this page.
-
 [id="CreateCppMod_AlpakitConvert"]
-=== Option 2: Alpakit "Convert to C++ & Blueprint Mod" on Existing Blueprint Mod
+=== Option 1: Alpakit "Convert to C++ & Blueprint Mod" on an Existing Blueprint Mod
 
 If you already have an existing blueprint mod that you'd like to add {cpp} to,
 open the Alpakit Edit Mod dialog for the mod from the Alpakit Dev window and click the "Convert to C++ & Blueprint Mod" button.
@@ -74,7 +64,17 @@ After using the button, close the editor,
 xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[regenerate Visual Studio project files],
 and build for the Development Editor target so your mod's new {cpp} module is recognized by the editor.
 
-Next, advance to the link:#AddClass[Adding New Classes] section of this page.
+Next, advance to the link:#Compile[Compiling] section of this page.
+
+[id="CreateCppMod_AlpakitTemplate"]
+=== Option 2: Using the Alpakit Template
+
+The Alpakit Create Mod wizard can automatically create a blank {cpp} and Blueprint mod for you.
+You can learn more about the wizard on the
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_unreal_plugin_creation[Plugin Setup and Game World Module] page.
+Select the "{cpp} and Blueprint" template.
+
+After using the wizard, advance to the link:#Compile[Compiling] section of this page.
 
 [id="CreateCppMod_Manual"]
 === Option 3: Creating the Mod-Module From Scratch
@@ -99,7 +99,7 @@ Make sure to replace all instances of `PLUGIN_NAME` with your actual mod referen
 
 [WARNING]
 ====
-Note that the file we just created is a C# file (.cs) and not a C++ file (.cpp).
+Note that the file we just created is a C# file (.cs) and not a {cpp} file (.cpp).
 ====
 
 This configuration will add the basic Unreal Engine framework,
@@ -146,7 +146,7 @@ void FYourModReferenceModule::StartupModule() {
 IMPLEMENT_GAME_MODULE(FYourModReferenceModule, YourModReference);
 ----
 
-=== Adding the Module to the UPlugin
+==== Adding the Module to the UPlugin
 
 Next we need to tell the Unreal Editor to use our editor module.
 For this open up the `YourModReference.uplugin` file in your plugin root.
@@ -164,12 +164,44 @@ Like this:
 ----
 (the name used was `YourModReference`, make sure you use your own mod reference instead)
 
-=== Finishing Up
+==== Finishing Up
 
 Now that you have added your module folder, configuration, source, and added it to the targets,
 you will need to regenerate your Visual Studio project files. Directions on how to do this can be found xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[here].
 
 After this process completes, you should be able to start working on the {cpp} code for your mod.
+
+[id="Compile"]
+== Compiling
+
+Whenever you make changes to the class structure of your code
+you will need to recompile the Unreal Editor before you can open it again.
+Do this by building the `Development Editor` `Win64` target of the `FactoryGame` project
+with the editor closed.
+
+Using Alpakit Dev or Alpakit Release from the Unreal editor
+will automatically build other targets as needed,
+so you don't need to worry about building them yourself
+unless the builds are failing and you want more specific details.
+
+To build for specific targets from Visual Studio, see the table below:
+
+.Manual Build Quick Reference
+|===
+| To build for X, use... |Solution Configuration|Solution Platform|Project
+
+| Unreal Editor (Windows)
+| Development Editor | Win64 | FactoryGame
+
+| Windows Client
+| Shipping | Win64 | FactoryGameSteam/FactoryGameEGS
+
+| Windows Dedicated Server
+| Shipping Server | Win64 | FactoryGame
+
+| Linux Dedicated Server
+| Shipping Server | Linux | FactoryGame
+|===
 
 [id="AddClass"]
 == Adding New Classes

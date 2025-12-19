@@ -1,15 +1,5 @@
 = Unreal Engine Asset Toolkit
 
-[WARNING]
-====
-The Asset Toolkit has not yet been fully tested on UE5 or the 1.0 release.
-====
-
-[NOTE]
-====
-This article is a work-in-progress. Please contact us on the Discord if you run into any issues here.
-====
-
 Community member Archengius has created a set of two plugins
 useful for dumping content from a compiled Unreal Engine game and importing it into the Unreal Engine Editor.
 
@@ -26,10 +16,10 @@ making working with base-game content much more convenient.
 [WARNING]
 ====
 If you decide to generate a complete copy of the project,
-make sure that your Content folder is not publicly available on Github or similar.
+make sure that your Content folder is not publicly available on GitHub or similar.
 
-If you only have a plugin-level repo, this is not a problem,
-but if you have a project-level repo as well, you should watch out for this.
+If you only have a plugin-level repo (root folder has a `.uplugin` file), this is not a problem,
+but if you have a project-level repo as well (root folder has a `.uproject` file), you should watch out for this.
 
 Because the assets are already tracked (shipped with the starter project),
 simply adding them to your `.gitignore` will not ensure they are excluded.
@@ -44,16 +34,19 @@ for more info.
 The Asset Toolkit repository consists of two plugins,
 a dumper, to be installed in the game,
 and an asset generator, to be installed in the editor.
-Both are contained in the https://github.com/mircearoata/UEAssetToolkit/tree/dev[Asset Toolkit repository].
+Both are contained in the https://github.com/satisfactorymodding/UEAssetToolkit/tree/dev[Asset Toolkit repository].
 Download a zip of the repository and extract somewhere,
 or clone it if desired.
 Regardless, make sure the copy you obtain is of the **`dev` branch** as it will have the latest fixes.
 
 [NOTE]
 ====
-Note that the link above points to the *dev branch of Mircea's fork* of the https://github.com/Archengius/UEAssetToolkit[original project].
+Note that the link above points to the *dev branch of the Satisfactory Modding Org's fork* of the https://github.com/Archengius/UEAssetToolkit[original project].
 Said fork is the one that the https://github.com/satisfactorymodding/UnrealProjectUpdater/blob/master/.github/workflows/updateSML.yml#L176[CI scripts]
 use to semi-automatically generate the starter project, and as such is usually kept more up to date.
+
+Community changes to the Asset Toolkit are often slow to merge,
+so it's best to ask on the Discord to see if there is a more recent fork or branch available.
 ====
 
 Once you have downloaded the files,
@@ -90,7 +83,8 @@ It takes files produced by the dumper and generates the uasset files your editor
 #include "MaterialEditingLibrary.h"
 ----
 - If you get errors about unresolved external modules, try deleting the project's `Intermediates` folder, regenerating project files, and building again.
-- Ask for help on the discord.
+- Ask on the Discord if there is a community fork that is more up to date.
+- Ask for help on the Discord.
 
 === Packaging the Asset Dumper as a Mod
 
@@ -110,22 +104,29 @@ If you don't, you could get ambiguous errors while dumping and generating.
 ====
 
 A user interface exists for using the dumper,
-but there are some crashing problems with it,
+but there are many crash problems with it,
 so these directions will cover using the command line version instead.
 
-To dump assets, navigate to your game install directory in Powershell.
-For example, `C:\EpicGamesGames\SatisfactoryEarlyAccess`
+First, navigate to your game install directory in Powershell.
+Open Powershell and use the `cd` command to change directories.
+For example, if your game is installed at `C:{NoBreakBackslash}EpicGamesGames{NoBreakBackslash}SatisfactoryEarlyAccess`,
+you would run:
+
+`cd C:\EpicGamesGames\SatisfactoryEarlyAccess`
 
 Next, from that directory, edit the following Powershell command to point to your game executable, then run it:
 
-`FactoryGameEGS.exe -EpicPortal -NoSteamClient -DumpAllGameAssets -RootAssetPath=/Game -ExcludePackagePaths=/Game/WwiseAudio -ExcludePackageNames=/Game/Geometry/Meshes/1M_Cube_Chamfer -PackagesPerTick=32 -ExitOnFinish -log -NewConsole`
+// cspell:ignore norhithread
+// Prevent break on dash and its argument
+`FactoryGameEGS.exe -EpicPortal -NoSteamClient -DumpAllGameAssets -{wj}RootAssetPath=/Game -ExcludePackagePaths=/Game/WwiseAudio -ExcludePackageNames=/Game/Geometry/Meshes/1M_Cube_Chamfer -PackagesPerTick=32 -ExitOnFinish -log -NewConsole -nullrhi -norhithread`
 
 [WARNING]
 ====
 The above command assumes you are using an Epic Games copy `FactoryGameEGS`.
 If you are using a Steam copy of the game:
 
-1. Use the xref:Development/TestingResources.adoc#LaunchScript[Launch Script] at least once before running the command to create the files required for the Steam game to launch correctly from the command line.
+1. Use the xref:Development/TestingResources.adoc#LaunchScript[Launch Script] at least once before running the command
+   to create the files required for the Steam game to launch correctly from the command line.
 2. Adjust the command to use `FactoryGameSteam` instead of `FactoryGameEGS`.
 ====
 
@@ -142,11 +143,13 @@ which will provide info regarding the dumping process (since `-log -NewConsole` 
 You can safely close the Powershell window once you see the console log window,
 although you may wish to keep it open to restart it if it crashes.
 
-Normally the dumper would be run with the `-nullrhi` flag to avoid wasting processing power on rendering the game's menu
-but this argument seems to be broken as of Satisfactory 1.0,
-so it has been excluded from the command.
-The game window will appear and will be exceedingly low FPS and behind in playing sound effects.
-Keep it minimized as the asset dumper operates and focus on the console window.
+The game user interface will never open since we used the `-nullrhi -norhithread` arguments,
+leaving only the console window visible.
+// Normally the dumper would be run with the `-nullrhi` flag to avoid wasting processing power on rendering the game's menu
+// but this argument seems to be broken as of Satisfactory 1.0,
+// so it has been excluded from the command.
+// The game window will appear and will be exceedingly low FPS and behind in playing sound effects.
+// Keep it minimized as the asset dumper operates and focus on the console window.
 
 // The game window itself will never open since the `-nullrhi` argument was used.
 After the game's loading process, you should see a sequence of `LogAssetDumper` messages.
@@ -346,6 +349,9 @@ because they are stored raw in the pak file (not the utoc/ucas) and the automati
 
 [TIP]
 ====
+There may be some files in the CustomAssets list that you don't have in your backup copy of the Starter Project.
+They were probably removed from the game and the CustomAssets list has not been updated to reflect this.
+
 Check the https://github.com/satisfactorymodding/UnrealProjectUpdater/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aopen[open pull requests]
 for the UnrealProjectUpdater repository to see if there are any additional CustomAssets that haven't been merged into the project's list yet.
 ====
