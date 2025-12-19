@@ -1,9 +1,11 @@
 include::../_includes/repo-versions.adoc[]
 
+// To check if stable and exp are the same, check the Build ID on SteamDB https://steamdb.info/app/526870/depots/
+
 // Live docs
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 This is the *latest stable* version of the docs. +
-Stable (Release) and Experimental are currently both the same version - 1.1 Release.
+Stable (Release) and Experimental are currently both the same game version.
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

@@ -2,6 +2,12 @@
 
 [IMPORTANT]
 ====
+Are you a new Satisfactory mod developer who hasn't set up a modding environment yet?
+Follow the xref:Development/BeginnersGuide/index.adoc[Getting Started Guide] instead.
+====
+
+[IMPORTANT]
+====
 Make sure to check the docs sidebar to see if there's an Updating guide written for the version you're updating to!
 It will have special directions and information that will save you a lot of time.
 

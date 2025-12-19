@@ -6,7 +6,7 @@ it's time to start setting the project up.
 
 [IMPORTANT]
 ====
-Are you a returning Satisfactory modder who already has a past modding environment set up?
+Are you a returning Satisfactory mod developer who already has a past modding environment set up?
 Make sure to follow the
 xref:Development/UpdatingToNewVersions.adoc[_Updating your Mod_]
 guide before following these directions.

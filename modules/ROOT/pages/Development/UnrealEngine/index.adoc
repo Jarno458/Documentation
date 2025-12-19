@@ -8,4 +8,6 @@ Although this section is titled "Unreal Engine",
 it only aims to cover Unreal concepts that are especially relevant to modding Satisfactory
 or must be done differently due to modding/Satisfactory intricacies.
 
-Consider following some of the tutorials listed on the xref:Development/UnrealEngine/UnrealLearningResources.adoc[Unreal Learning Resources page] instead.
+Consider following some of the tutorials listed on the
+xref:Development/UnrealEngine/UnrealLearningResources.adoc[Unreal Learning Resources page]
+to gain a better understanding of Unreal Engine in general.
