@@ -22,11 +22,14 @@ A HUB Milestone to purchase in order to unlock our custom recipe
 A new item to produce - a flatscreen TV called a 'Doc Item'
 * {blank}
 +
-A new buildable object that can be painted with the paint gun
+A new buildable object that can be colored with the Customizer
 * {blank}
 +
 A basic machine that consumes power and counts the number and
 types of items that pass through it 
+* {blank}
++
+A Solar Panel building that generates power during the daytime
 
 [TIP]
 ====
