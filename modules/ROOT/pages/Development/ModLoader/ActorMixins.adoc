@@ -35,7 +35,7 @@ image::Development/ModLoader/ActorMixins/Components.png[]
 By default, Mixins allow you to implement additional code for the Begin Play, Construction Script, End Play, and Tick functions on the actor.
 Note that even though the Unreal editor labels these as overrides when creating them,
 they do not cancel the original function on the actor
-and are instead created as event notes.
+and are instead created as event nodes.
 
 image::Development/ModLoader/ActorMixins/Functions.png[]
 

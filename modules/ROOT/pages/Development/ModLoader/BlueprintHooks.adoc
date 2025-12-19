@@ -104,14 +104,16 @@ The "Hook Implementation" option on hook nodes determines what function is invok
 
 === Hook Function Parameters
 
-Hook functions parameters are populated by the hooking system based on 
+Hook functions parameters are populated by the hooking system based on
+the target function's parameters, target class, and type of hook.
 
-The first parameter should be the type of Blueprint you are hooking.
-Subsequent parameters can be any variable that is available in the hooked function's context that the hook might want to read/write. If set to be By Ref, the type must exactly match, but otherwise a wider type can be used.
+The first parameter should be named `Target` and be of the type of Blueprint you are hooking.
+Subsequent parameters can be any variable that is available in the hooked function's context that the hook might want to read/write.
+If set to be By Ref, the type must exactly match, but otherwise a wider type can be used.
 
 Parameters will be mapped using their name to:
 
-* `Target` - special hooking argument that resolves to the object instance the hooked function was running
+* `Target` - special hooking argument that resolves to the object instance the hooked function was running on
 * Global Variables - on the object instance
 * Local Variables - function inputs, function locals, and function temps (which you can check for in a BP code dump, either via the link:#ViewingBlueprintFunctionImplementations[`-DumpBlueprintPatchingResults` launch argument] which generates pseudocode, or in xref:Development/ExtractGameFiles.adoc#FModel[FModel] which generates a json very similar to the asset dump)
 * `TargetReturnValue` - special hooking argument that resolves to the hooked function's ReturnValue
@@ -135,6 +137,28 @@ image::Development/ModLoader/BlueprintHooks/RegisterHook.png[Register Hook in Ga
 If your hooks aren't triggering as expected,
 check your logs for messages in the `LogBlueprintHookingCodeGen` and `LogBlueprintHookManager` categories.
 A failure to attach a hook will produce a message and usually also the blueprint bytecode.
+
+== Advanced Functionality
+
+=== Modify Function Arguments
+
+You can modify the arguments the hooked function receives by using a Before Hook targeting Function Entry Statement.
+Add the parameter you want to modify as a By-Ref parameter on your hook function.
+The initial value can be accessed via the parameter and modified by a Set By Ref node.
+
+// === Cancel Hooked Function Execution
+
+// TODO, see https://discord.com/channels/555424930502541343/562722670974599227/1451402917624942612
+
+// You can (conditionally) cancel the execution of a function using a Replace hook.
+// By default, Replace hooks do not execute their original target, .
+// When relevant, Replace hooks will still execute their original target if the Hook Implementation returns `True` for a boolean output parameter named `ReturnValue`.
+
+=== More!
+
+The Blueprint Hooking system is very powerful and flexible.
+The examples on this page and ExampleMod only scratch the surface of what is possible.
+Please use the "Edit this Page" button in the top right to add more examples
 
 == Limitations and Workarounds
 
