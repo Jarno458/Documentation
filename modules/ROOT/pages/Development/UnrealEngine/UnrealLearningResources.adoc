@@ -113,7 +113,7 @@ include::./../_includes/editor-familiarize-list.adoc[]
 * 📽 https://www.youtube.com/channel/UCOVfF7PfLbRdVEm0hONTrNQ[Mathew Wadstein] -
   YouTube channel with short, focused videos on specific Unreal Engine concepts.
 
-* 📽https://www.youtube.com/channel/UCz-eYJAUgSE-mqzKtit7m9g[Tinkr Academy/Virtus Learning Hub]
+* 📽 https://www.youtube.com/channel/UCz-eYJAUgSE-mqzKtit7m9g[Tinkr Academy/Virtus Learning Hub]
   YouTube channel with beginner-focused general Unreal tutorials and walkthroughs.
 
 // This appears to be paid only now
