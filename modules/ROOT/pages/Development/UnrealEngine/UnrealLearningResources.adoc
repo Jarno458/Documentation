@@ -48,11 +48,14 @@ include::./../_includes/editor-familiarize-list.adoc[]
   A high-level overview of what Blueprints are and what they can do.
   Links to other pages with more information about specific features.
 
-    ** 📖 https://dev.epicgames.com/documentation/en-us/unreal-engine/basic-scripting-with-blueprints-in-unreal-engine?application_version=5.3[Basic Scripting with Blueprints] -
-        Brief introduction to blueprint variables and event graphs
+  ** 📖 https://dev.epicgames.com/documentation/en-us/unreal-engine/basic-scripting-with-blueprints-in-unreal-engine?application_version=5.3[Basic Scripting with Blueprints] -
+      Brief introduction to blueprint variables and event graphs
 
-    ** 📖 https://dev.epicgames.com/documentation/en-us/unreal-engine/overview-of-blueprints-visual-scripting-in-unreal-engine?application_version=5.3[Blueprints Visual Scripting Overview] -
-        Breaks down the anatomy of a Blueprint and the different types of Blueprints available.
+  ** 📖 https://dev.epicgames.com/documentation/en-us/unreal-engine/overview-of-blueprints-visual-scripting-in-unreal-engine?application_version=5.3[Blueprints Visual Scripting Overview] -
+      Breaks down the anatomy of a Blueprint and the different types of Blueprints available.
+
+  ** ⭐📖 https://dev.epicgames.com/documentation/en-us/unreal-engine/graph-editor-for-the-blueprints-visual-scripting-editor-in-unreal-engine?application_version=5.3[Blueprint Editor: Graph Editor] -
+  Information on the Blueprint graph editor interface and the available interactions/keybinds.
 
 * ⭐📖 https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprint-tutorials-in-unreal-engine?application_version=5.3[Blueprint Tutorials] -
   Links to walkthroughs of accomplishing various tasks in the Blueprint scripting editor.
