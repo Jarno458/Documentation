@@ -136,8 +136,8 @@ If you want the context to be available:
 
 It is suggested that your code respond to input actions in either an actor
 (such as a xref:Development/ModLoader/Subsystems.adoc[Subsystems]), a widget,
-or a custom actor component on the player character or controller attached
-via xref:Development/ModLoader/SimpleConstructionScript.adoc[Simple Construction Script (SCS) Hooks].
+or a custom actor component on the player character or controller attached via
+xref:Development/ModLoader/ActorMixins.adoc[Actor Mixins].
 
 On some actors, such as Subsystems,
 you may need to call Player Controller instance > EnableInput for them to process user input.
