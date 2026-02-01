@@ -10,12 +10,13 @@ page for information about Unreal's replication system and special cases for Sat
 
 Reliable Messaging was introduced in the 1.1 release
 and is a Coffee Stain custom implementation that completely bypasses Unreal's normal replication system.
-It sends messages directly to clients over an TCP connection, this comes at the cost of a slightly higher latency, 
-But this has the advantage that the developer has fine grained control over the contents of the message send and 
-it wont ever trigger the Reliable Buffer Overflow.
+It sends messages directly to clients over a TCP connection. Although this comes at the
+cost of slightly higher latency, it gives developers fine-grained control over the
+contents of the message, and is also not susceptible to Unreal Engine's replication
+limits (e.g. the dreaded Reliable Buffer Overflow).
 
 The purpose of the system is to replicate large amounts of data without hitting Unreal Engine's its limits.
-Example use cases are for replicating foliage removals, recipe and schematic managers.
+Satisfactory uses this system to replicate foliage removals, as well as the recipe and schematic managers.
 
 == Replicating Data
 
@@ -30,7 +31,7 @@ Reliable Messaging supports up 255 different channels for messages for different
 Its important that the channel ids do not overlap, even across different mods and base game.
 Else your client will receive data that it does not know how to parse, so be creative with choosing your channel id.
 In any case choose a channel id higher than 50 so it will not conflict with https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Source/FactoryGame/Public/FactoryGame.h[channel ids used by the base game].
-You can define your channel id in your header like
+You can define it's channel ID in your header like
 
 [source,c++]
 ----
@@ -211,7 +212,7 @@ void AModReliableMessagingSubsystem::SendRawMessage(const APlayerController* Pla
 ----
 
 You are in full control of whether or not to send data to certain player controllers, 
-and it doesn't have to be some initial data, you can call the `SendMessage` whenever you like.
+and it doesn't have to be some initial data, you call the `SendMessage` function whenever you like.
 If for example you do want to send a message to all players but you don't directly access to their controllers
 you can use and actor iterator like this.
 

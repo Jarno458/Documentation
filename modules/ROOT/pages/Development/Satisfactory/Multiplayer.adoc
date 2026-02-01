@@ -268,7 +268,7 @@ See the linked page for more information on how to replicate inventory component
 == Replication with Reliable Messaging
 
 Since the 1.1 release you can use xref:Development/Satisfactory/ReliableMessaging.adoc[Reliable Messaging] 
-to replicate large amount of data while bypassing unreal engine's build in replication 
+to replicate large amount of data while bypassing Unreal Engine's built-in replication.
 
 == Replicated Maps
 
