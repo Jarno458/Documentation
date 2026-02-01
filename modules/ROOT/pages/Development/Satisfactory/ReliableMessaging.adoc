@@ -23,7 +23,19 @@ Satisfactory uses this system to replicate foliage removals, as well as the reci
 === Setting up the build dependency
 
 To use the system to replicate data, we must first make it available in our cpp code
-we need to add `"ReliableMessaging"` to our `PublicDependencyModuleNames` in the `YourModReference.Build.cs`
+we need to add `"ReliableMessaging"` to our `PublicDependencyModuleNames` in the `YourModReference.Build.cs`.
+We must also add it as an dependency module in our mods .uplugin file by adding it under modules.
+
+[source,uplugin]
+----
+	"Modules": [
+		{
+			"Name": "ReliableMessaging",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+	],
+----
 
 === Choosing a channel Id
 
@@ -33,7 +45,7 @@ Else your client will receive data that it does not know how to parse, so be cre
 In any case choose a channel id higher than 50 so it will not conflict with https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Source/FactoryGame/Public/FactoryGame.h[channel ids used by the base game].
 You can define it's channel ID in your header like
 
-[source,c++]
+[source,h]
 ----
 constexpr uint8 RELIABLE_MESSAGING_CHANNEL_ID_FOR_MY_MOD = ; //choose your own number
 ----
