@@ -24,16 +24,15 @@ Satisfactory uses this system to replicate foliage removals, as well as the reci
 
 To use the system to replicate data, we must first make it available in our cpp code
 we need to add `"ReliableMessaging"` to our `PublicDependencyModuleNames` in the `YourModReference.Build.cs`.
-We must also add it as an dependency module in our mods .uplugin file by adding it under modules.
+We must also add it as an dependency plugin in our mods .uplugin file by adding it under plugins, no SemVersion is required.
 
 [source,uplugin]
 ----
-	"Modules": [
+	"Plugins": [
 		{
 			"Name": "ReliableMessaging",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		},
+			"Enabled": true
+		}
 	],
 ----
 
