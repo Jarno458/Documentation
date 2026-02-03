@@ -22,9 +22,9 @@ Satisfactory uses this system to replicate foliage removals, as well as the reci
 
 === Setting up the build dependency
 
-To use the system to replicate data, we must first make it available in our cpp code
-we need to add `"ReliableMessaging"` to our `PublicDependencyModuleNames` in the `YourModReference.Build.cs`.
-We must also add it as an dependency plugin in our mods .uplugin file by adding it under plugins, no SemVersion is required.
+To use the system to replicate data, we must first make it available.
+In our cpp code we need to add `"ReliableMessaging"` to our `PublicDependencyModuleNames` in the `YourModReference.Build.cs`.
+And we must also add it as an dependency plugin in our mods .uplugin file by adding it under plugins, no SemVersion is required.
 
 [source,uplugin]
 ----
@@ -59,7 +59,7 @@ It will look something like this
 [source,h]
 ----
 // some custom data struct (can be USTRUCT(BlueprintType)) if desired
-struct ARCHIPELAGO_API FPlayerInfo
+struct YOURMOD_API FPlayerInfo
 {
 	FString Name;
 	FString Job;
@@ -111,30 +111,38 @@ FArchive& operator<<(FArchive& Ar, FModPlayerInfoJobsMessage& Message)
 On the client we want to register a callback to be called when the server sends us messages.
 This is done by retrieving the `UReliableMessagingPlayerComponent` for your local player controller
 and calling `RegisterMessageHandler` on it.
+For this we will be creating a `UActorComponent` in cpp that will receive and send the messages.
 Its generally a good idea to setup this handler early so you can start receiving your data early.
-For that its recommended to setup this handler in the `BeginPlay()` of your `APlayerController`.
-This can be achieved using a xref:Development/ModLoader/ActorMixins.adoc[Actor Mixin] 
-that overrides the Begin Play event on `BP_PlayerController`
+For that its recommended to setup this handler in the `BeginPlay()` of your `UActorComponent`.
 
-image::Satisfactory/ReliableMessaging/BlueprintMixinTarget.png[Actor mixin target example]
-image::Satisfactory/ReliableMessaging/OverrideBeginPlay.png[Override begin play]
+[source,h]
+----
+// `BlueprintSpawnableComponent` is required to make it show up as an component
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class YOURMOD_API UModReliableMessagingPlayerComponent : public UActorComponent
+{
+	GENERATED_BODY()
 
-Then from the mixin call into cpp, 
-this can for example be done in locally spawned xref:Development/ModLoader/Subsystems.adoc[Mod Subsystem] 
-or in blueprint function library.
+public:
+	virtual void BeginPlay() override;
 
+	void OnRawDataReceived(TArray<uint8>&& InMessageData);
+}
+----
 [source,c++]
 ----
-void AModReliableMessagingSubsystem::OnPlayerControllerBeginPlay(const APlayerController* PlayerController)
+void UModReliableMessagingPlayerComponent::BeginPlay()
 {
-	// We are local player connected to a server, register the message handler
+	const APlayerController* PlayerController = CastChecked<APlayerController>(GetOwner());
+
 	if (!PlayerController->HasAuthority() && PlayerController->IsLocalController())
 	{
+		//register data received handler
 		if (UReliableMessagingPlayerComponent* PlayerComponent = UReliableMessagingPlayerComponent::GetFromPlayer(PlayerController))
 		{
 			PlayerComponent->RegisterMessageHandler(RELIABLE_MESSAGING_CHANNEL_ID_FOR_MY_MOD,
 				UReliableMessagingPlayerComponent::FOnBulkDataReplicationPayloadReceived::CreateUObject(this, 
-                    &AModReliableMessagingSubsystem::OnRawDataReceived));
+					&UModReliableMessagingPlayerComponent::OnRawDataReceived));
 		}
 	}
 }
@@ -145,7 +153,7 @@ Assuming we are going to receive messages like the one defined above, we can imp
 
 [source,c++]
 ----
-void AModReliableMessagingSubsystem::OnRawDataReceived(TArray<uint8>&& InMessageData)
+void UModReliableMessagingPlayerComponent::OnRawDataReceived(TArray<uint8>&& InMessageData)
 {
 	FMemoryReader RawMessageMemoryReader(InMessageData);
 	FNameAsStringProxyArchive NameAsStringProxyArchive(RawMessageMemoryReader);
@@ -167,7 +175,7 @@ void AModReliableMessagingSubsystem::OnRawDataReceived(TArray<uint8>&& InMessage
             NameAsStringProxyArchive << JobsMessage;
             if (NameAsStringProxyArchive.IsError()) return;
 
-            HandlePlayerInfoJobsMessage(JobsMessage);
+            ToDoHandlePlayerInfoJobsMessage(JobsMessage);
             
             break;
         }
@@ -175,15 +183,26 @@ void AModReliableMessagingSubsystem::OnRawDataReceived(TArray<uint8>&& InMessage
 }
 ----
 
+=== Setting up the actor mixin
+
+Next up we want to our component to be attached to the PlayerController.
+This can be achieved using a xref:Development/ModLoader/ActorMixins.adoc[Actor Mixin] 
+targeting `BP_PlayerController` to which we add our custom actor component `UModReliableMessagingPlayerComponent`. 
+
+image::Satisfactory/ReliableMessaging/BlueprintMixinTarget.png[Actor mixin target example]
+image::Satisfactory/ReliableMessaging/AddComponent.png[Add Component]
+
+Be sure to check the checkbox `Auto Activate`.
+
 === Sending the message from the server
 
 If you want to directly replicate some initial data to clients that connect to the server,
-we can reuse same `OnPlayerControllerBeginPlay` that we defined above.
+we can reuse same `BeginPlay` of our component that we defined above.
 To do this we will need to extend it to directly send the data to connecting clients.
 
 [source,c++]
 ----
-void AModReliableMessagingSubsystem::OnPlayerControllerBeginPlay(const APlayerController* PlayerController)
+void UModReliableMessagingPlayerComponent::BeginPlay()
 {
 	// We are Server, and this is a remote player. Send descriptor lookup array to the client
 	if (PlayerController->HasAuthority() && !PlayerController->IsLocalController())
@@ -205,7 +224,7 @@ And the actual implementation of `SendRawMessage` will look something like this.
 
 [source,c++]
 ----
-void AModReliableMessagingSubsystem::SendRawMessage(const APlayerController* PlayerController, FModPlayerInfoJobsMessage Message) const
+void UModReliableMessagingPlayerComponent::SendRawMessage(const APlayerController* PlayerController, FModPlayerInfoJobsMessage Message) const
 {
 	TArray<uint8> RawMessageData;
 	FMemoryWriter RawMessageMemoryWriter(RawMessageData);
